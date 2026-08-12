@@ -31,8 +31,8 @@ export default function SettingsScreen({ onBack }: { onBack: () => void }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0b0f0e', padding: 20 },
-  header: { flexDirection: 'row', alignItems: 'center', marginBottom: 30, marginTop: 20 },
+  container: { flex: 1, backgroundColor: '#0b0f0e', padding: 20, paddingTop: 60 },
+  header: { flexDirection: 'row', alignItems: 'center', marginBottom: 30 },
   backBtn: { color: '#00ffcc', fontSize: 16, marginRight: 20 },
   title: { color: '#fff', fontSize: 22, fontWeight: 'bold' },
   settingItem: { 
