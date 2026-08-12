@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Vibration, Alert } from 'react-native';
+import VaultScreen from './VaultScreen';
+import SettingsScreen from './SettingsScreen';
 
 export default function App() {
   const [pin, setPin] = useState('');
-  const [storedPin, setStoredPin] = useState('1234'); // डिफ़ॉल्ट पिन 1234
+  const [storedPin] = useState('1234');
   const [isUnlocked, setIsUnlocked] = useState(false);
-  const [isSettingNew, setIsSettingNew] = useState(false);
+  const [currentScreen, setCurrentScreen] = useState<'main' | 'vault' | 'settings'>('main');
 
   const handlePress = (num: string) => {
     if (pin.length < 6) {
@@ -20,6 +22,7 @@ export default function App() {
   const handleVerify = () => {
     if (pin === storedPin) {
       setIsUnlocked(true);
+      setCurrentScreen('main');
       setPin('');
     } else {
       Vibration.vibrate(400);
@@ -29,15 +32,37 @@ export default function App() {
   };
 
   if (isUnlocked) {
+    if (currentScreen === 'vault') {
+      return <VaultScreen onBack={() => setCurrentScreen('main')} />;
+    }
+    if (currentScreen === 'settings') {
+      return <SettingsScreen onBack={() => setCurrentScreen('main')} />;
+    }
+
     return (
       <View style={styles.container}>
         <Text style={styles.title}>INDCORE VAULT</Text>
         <Text style={styles.subtitle}>स्वागत है बॉस! तिजोरी सुरक्षित है।</Text>
+        
+        <TouchableOpacity 
+          style={styles.menuButton} 
+          onPress={() => setCurrentScreen('vault')}
+        >
+          <Text style={styles.menuButtonText}>📂 Photo Vault & Logs</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={styles.menuButton} 
+          onPress={() => setCurrentScreen('settings')}
+        >
+          <Text style={styles.menuButtonText}>⚙️ App Settings</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity 
           style={styles.lockButton} 
           onPress={() => setIsUnlocked(false)}
         >
-          <Text style={styles.lockButtonText}>लॉक करें</Text>
+          <Text style={styles.lockButtonText}>🔒 लॉक करें</Text>
         </TouchableOpacity>
       </View>
     );
@@ -46,7 +71,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>INDCORE SECURITY</Text>
-      <Text style={styles.subtitle}>पिन दर्ज करें (4-6 डिजिट)</Text>
+      <Text style={styles.subtitle}>पिन दर्ज करें (डिफ़ॉल्ट: 1234)</Text>
 
       <View style={styles.pinDisplay}>
         {['1', '2', '3', '4', '5', '6'].map((_, index) => (
@@ -137,15 +162,31 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: '600',
   },
+  menuButton: {
+    width: '80%',
+    backgroundColor: '#161616',
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 15,
+    borderWidth: 1,
+    borderColor: '#00ffcc',
+  },
+  menuButtonText: {
+    color: '#00ffcc',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
   lockButton: {
-    marginTop: 20,
-    backgroundColor: '#00ffcc',
+    marginTop: 10,
+    backgroundColor: '#ff4444',
     paddingVertical: 12,
     paddingHorizontal: 30,
     borderRadius: 8,
   },
   lockButtonText: {
-    color: '#000000',
+    color: '#ffffff',
     fontWeight: 'bold',
     fontSize: 16,
   },
