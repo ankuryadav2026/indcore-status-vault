@@ -47,13 +47,6 @@ export default function App() {
     }
   };
 
-  // पैनिक बटन - तुरंत ऐप लॉक करने के लिए
-  const handlePanicLock = () => {
-    setIsUnlocked(false);
-    setEnteredPin('');
-    Alert.alert("🔒 Panic Mode", "ऐप तुरंत सुरक्षित रूप से लॉक कर दिया गया है!");
-  };
-
   if (!isUnlocked) return (
     <View style={styles.lockContainer}>
       <Text style={styles.title}>INDCORE COMMAND</Text>
@@ -86,13 +79,7 @@ export default function App() {
     <View style={styles.container}>
       {currentTab === 'overview' && (
         <ScrollView style={styles.content}>
-          <View style={styles.headerRow}>
-            <Text style={styles.header}>INDCORE COMMAND</Text>
-            {/* पैनिक बटन */}
-            <TouchableOpacity style={styles.panicBtn} onPress={handlePanicLock}>
-              <Text style={styles.panicText}>🚨 LOCK</Text>
-            </TouchableOpacity>
-          </View>
+          <Text style={styles.header}>INDCORE COMMAND CENTER</Text>
           
           {/* स्टेटस कार्ड */}
           <View style={styles.mainCard}>
@@ -150,10 +137,7 @@ const styles = StyleSheet.create({
   pinBtn: { backgroundColor: '#00ffcc', padding: 16, borderRadius: 10, width: '100%', alignItems: 'center' },
   pinBtnText: { color: '#0b0f0e', fontWeight: 'bold', fontSize: 16 },
   content: { flex: 1, padding: 20, paddingTop: 60 },
-  headerRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 },
-  header: { color: '#00ffcc', fontSize: 19, fontWeight: 'bold', letterSpacing: 1 },
-  panicBtn: { backgroundColor: '#2a1215', paddingVertical: 6, paddingHorizontal: 12, borderRadius: 8, borderWidth: 1, borderColor: '#ff4d4d' },
-  panicText: { color: '#ff4d4d', fontWeight: 'bold', fontSize: 12 },
+  header: { color: '#00ffcc', fontSize: 20, fontWeight: 'bold', marginBottom: 20, letterSpacing: 1 },
   mainCard: { backgroundColor: '#131b18', padding: 20, borderRadius: 14, borderWidth: 1, borderColor: '#1b2d26', marginBottom: 25 },
   statusRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 8 },
   activeDot: { width: 10, height: 10, borderRadius: 5, backgroundColor: '#00ffcc', marginRight: 10 },
